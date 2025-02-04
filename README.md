@@ -16,11 +16,12 @@ A Discord bot that helps track and alert for boss spawn times in games. The bot 
 - `!dead <boss_name>` - Records a boss death and calculates next spawn
 - `!list_bosses` - Shows all bosses and their next spawn times
 
-## Setup
+## Documentation
+
+You can find everything you need here: [Discord.py](https://discordpy.readthedocs.io/en/stable/index.html)
 
 ### Prerequisites
 
-- Python 3.11 (best compatible version with discord.py)
+- Python 3.11 (best compatible version with [discord.py](https://discordpy.readthedocs.io/en/stable/index.html)
 - A Discord bot token
 - A Discord server with a channel for alerts
-
