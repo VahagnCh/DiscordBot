@@ -7,7 +7,6 @@ A Discord bot that helps track and alert for boss spawn times in games. The bot 
 - 🕒 Tracks boss spawn cycles automatically
 - ⏰ Sends alerts 10 minutes before boss spawns
 - 📝 Maintains fixed spawn schedules for each boss
-- 🔄 Adjusts schedules when bosses are killed
 - 🌎 Timezone-aware scheduling
 
 ## Commands
