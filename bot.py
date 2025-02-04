@@ -16,17 +16,61 @@ timezone = pytz.timezone('America/Mexico_City')  # Change this to your timezone
 # Dictionary to store boss information
 bosses = {
     'Blumens': {
-        'cycle': 2, 
+        'cycle': 2,  # This boss respawns every 2 hours
         'last_death': None, 
         'alerted': False,
+        'location': 'Easy Marianndel-5',
         'base_time': timezone.localize(datetime.now().replace(hour=23, minute=15, second=0, microsecond=0))  # 11:15 PM
     },
     'Betalanse': {
         'cycle': 2, 
         'last_death': None, 
         'alerted': False,
+        'location': 'Easy Carrotova-5',
         'base_time': timezone.localize(datetime.now().replace(hour=22, minute=0, second=0, microsecond=0))  # 10 PM
-    }
+    },
+    'Cryo': {
+        'cycle': 4,
+        'last_death': None,
+        'alerted': False,
+        'location': 'Easy Acryos-5',
+        'base_time': timezone.localize(datetime.now().replace(hour=24, minute=5, second=0, microsecond=0))  # 12:05pm PM
+    },
+    'Sporelex': {
+        'cycle': 4,
+        'last_death': None,
+        'alerted': False,
+        'location': 'Easy Luminospore-5',
+        'base_time': timezone.localize(datetime.now().replace(hour=23, minute=10, second=0, microsecond=0))  # 11:10pm PM
+    },
+    'Toxspore': {
+        'cycle': 4,
+        'last_death': None,
+        'alerted': False,
+        'location': 'Normal Cryptospora-5',
+        'base_time': timezone.localize(datetime.now().replace(hour=23, minute=20, second=0, microsecond=0))  # 10 PM
+    },
+    'Bristol': {
+        'cycle': 6,
+        'last_death': None,
+        'alerted': False,
+        'location': 'Normal Silavar-5',
+        'base_time': timezone.localize(datetime.now().replace(hour=1, minute=25, second=0, microsecond=0))  # 1:25 AM
+    },
+    'Veilian': {
+        'cycle': 8,
+        'last_death': None,
+        'alerted': False,
+        'location': 'Normal Mortaris-5',
+        'base_time': timezone.localize(datetime.now().replace(hour=24, minute=25, second=0, microsecond=0))  # 12:25 AM
+    },
+    'Arque': {
+        'cycle': 8,
+        'last_death': None,
+        'alerted': False,
+        'location': 'Normal Astreon-5',
+        'base_time': timezone.localize(datetime.now().replace(hour=1, minute=35, second=0, microsecond=0))  # 01:35 AM
+    }   
 }
 
 async def check_spawns():
@@ -50,7 +94,7 @@ async def check_spawns():
             
             # If 10 minutes before spawn and haven't alerted yet
             if timedelta(minutes=9) < time_until_spawn <= timedelta(minutes=10) and not info['alerted']:
-                await channel.send(f'⚠️ **Alert**: {boss_name} will spawn in 10 minutes! (at {next_spawn.strftime("%H:%M:%S")})')
+                await channel.send(f'⚠️ **Alert**: {boss_name} will spawn in 10 minutes in {info["location"]}! (at {next_spawn.strftime("%H:%M:%S")})')
                 info['alerted'] = True
             
             # Reset alert flag after spawn time
@@ -95,7 +139,7 @@ async def next(ctx, *, boss_name: str):
             next_spawn = base
         
         time_until = next_spawn - current_time
-        await ctx.send(f'{boss_name} next spawn: {next_spawn.strftime("%H:%M:%S")} (in {str(time_until).split(".")[0]})')
+        await ctx.send(f'{boss_name} ({info["location"]}) next spawn: {next_spawn.strftime("%H:%M:%S")} (in {str(time_until).split(".")[0]})')
     else:
         await ctx.send(f'Unknown boss: {boss_name}')
 
@@ -115,7 +159,7 @@ async def list_bosses(ctx):
             next_spawn = base
         
         time_until = next_spawn - current_time
-        message += f"{boss}: {info['cycle']}h cycle - Next: {next_spawn.strftime('%H:%M:%S')} (in {str(time_until).split('.')[0]})\n"
+        message += f"{boss} ({info['location']}): {info['cycle']}h cycle - Next: {next_spawn.strftime('%H:%M:%S')} (in {str(time_until).split('.')[0]})\n"
     message += "```"
     await ctx.send(message)
 

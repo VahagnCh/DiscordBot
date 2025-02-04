@@ -23,3 +23,4 @@ A Discord bot that helps track and alert for boss spawn times in games. The bot 
 - Python 3.11 (best compatible version with discord.py)
 - A Discord bot token
 - A Discord server with a channel for alerts
+
