@@ -4,7 +4,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Easy Marianndel-5",
-        "image": "images/blumens.png",
+        "image": "images/Blumens.webp",
         "base_time": {
             "hour": 23,
             "minute": 15,
@@ -16,7 +16,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Easy Carrotova-5",
-        "image": "images/betalanse.png",
+        "image": "images/Betalanse.webp",
         "base_time": {
             "hour": 22,
             "minute": 0,
@@ -28,8 +28,9 @@
         "last_death": null,
         "alerted": false,
         "location": "Easy Acryos-5",
+        "image": "images/Cryo.webp",
         "base_time": {
-            "hour": 24,
+            "hour": 0,
             "minute": 5,
             "second": 0
         }
@@ -39,6 +40,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Easy Luminospore-5",
+        "image": "images/Sporelex.webp",
         "base_time": {
             "hour": 23,
             "minute": 10,
@@ -50,6 +52,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Normal Cryptospora-5",
+        "image": "images/Toxspore.webp",
         "base_time": {
             "hour": 23,
             "minute": 20,
@@ -61,6 +64,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Normal Silavar-5",
+        "image": "images/Bristol.webp",
         "base_time": {
             "hour": 1,
             "minute": 25,
@@ -72,8 +76,9 @@
         "last_death": null,
         "alerted": false,
         "location": "Normal Mortaris-5",
+        "image": "images/Veilian.webp",
         "base_time": {
-            "hour": 24,
+            "hour": 0,
             "minute": 25,
             "second": 0
         }
@@ -83,6 +88,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Normal Astreon-5",
+        "image": "images/Arque.webp",
         "base_time": {
             "hour": 1,
             "minute": 35,
@@ -94,6 +100,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Normal Flameron-5",
+        "image": "images/Rootrus.webp",
         "base_time": {
             "hour": 22,
             "minute": 40,
@@ -105,6 +112,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Normal Noxmar-5",
+        "image": "images/Sapphire_blade.webp",
         "base_time": {
             "hour": 23,
             "minute": 45,
@@ -116,6 +124,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Normal Corallia-5",
+        "image": "images/Coralisk.webp",
         "base_time": {
             "hour": 23,
             "minute": 50,
@@ -127,6 +136,7 @@
         "last_death": null,
         "alerted": false,
         "location": "Easy Ventera-5",
+        "image": "images/Breeze.webp",
         "base_time": {
             "hour": 2,
             "minute": 5,
