@@ -1,0 +1,136 @@
+{
+    "Blumens": {
+        "cycle": 2,
+        "last_death": null,
+        "alerted": false,
+        "location": "Easy Marianndel-5",
+        "image": "images/blumens.png",
+        "base_time": {
+            "hour": 23,
+            "minute": 15,
+            "second": 0
+        }
+    },
+    "Betalanse": {
+        "cycle": 2,
+        "last_death": null,
+        "alerted": false,
+        "location": "Easy Carrotova-5",
+        "image": "images/betalanse.png",
+        "base_time": {
+            "hour": 22,
+            "minute": 0,
+            "second": 0
+        }
+    },
+    "Cryo": {
+        "cycle": 4,
+        "last_death": null,
+        "alerted": false,
+        "location": "Easy Acryos-5",
+        "base_time": {
+            "hour": 24,
+            "minute": 5,
+            "second": 0
+        }
+    },
+    "Sporelex": {
+        "cycle": 4,
+        "last_death": null,
+        "alerted": false,
+        "location": "Easy Luminospore-5",
+        "base_time": {
+            "hour": 23,
+            "minute": 10,
+            "second": 0
+        }
+    },
+    "Toxspore": {
+        "cycle": 4,
+        "last_death": null,
+        "alerted": false,
+        "location": "Normal Cryptospora-5",
+        "base_time": {
+            "hour": 23,
+            "minute": 20,
+            "second": 0
+        }
+    },
+    "Bristol": {
+        "cycle": 6,
+        "last_death": null,
+        "alerted": false,
+        "location": "Normal Silavar-5",
+        "base_time": {
+            "hour": 1,
+            "minute": 25,
+            "second": 0
+        }
+    },
+    "Veilian": {
+        "cycle": 8,
+        "last_death": null,
+        "alerted": false,
+        "location": "Normal Mortaris-5",
+        "base_time": {
+            "hour": 24,
+            "minute": 25,
+            "second": 0
+        }
+    },
+    "Arque": {
+        "cycle": 8,
+        "last_death": null,
+        "alerted": false,
+        "location": "Normal Astreon-5",
+        "base_time": {
+            "hour": 1,
+            "minute": 35,
+            "second": 0
+        }
+    },
+    "Rootrus": {
+        "cycle": 10,
+        "last_death": null,
+        "alerted": false,
+        "location": "Normal Flameron-5",
+        "base_time": {
+            "hour": 22,
+            "minute": 40,
+            "second": 0
+        }
+    },
+    "Sapphire blade": {
+        "cycle": 10,
+        "last_death": null,
+        "alerted": false,
+        "location": "Normal Noxmar-5",
+        "base_time": {
+            "hour": 23,
+            "minute": 45,
+            "second": 0
+        }
+    },
+    "Coralisk": {
+        "cycle": 12,
+        "last_death": null,
+        "alerted": false,
+        "location": "Normal Corallia-5",
+        "base_time": {
+            "hour": 23,
+            "minute": 50,
+            "second": 0
+        }
+    },
+    "Breeze": {
+        "cycle": 12,
+        "last_death": null,
+        "alerted": false,
+        "location": "Easy Ventera-5",
+        "base_time": {
+            "hour": 2,
+            "minute": 5,
+            "second": 0
+        }
+    }
+} 

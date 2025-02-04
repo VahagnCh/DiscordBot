@@ -3,7 +3,8 @@ from discord.ext import commands
 import os
 from datetime import datetime, timedelta
 import asyncio
-import pytz  # Add timezone support
+import pytz
+import json
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -13,65 +14,32 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 # Get your timezone
 timezone = pytz.timezone('America/Mexico_City')  # Change this to your timezone
 
-# Dictionary to store boss information
-bosses = {
-    'Blumens': {
-        'cycle': 2,  # This boss respawns every 2 hours
-        'last_death': None, 
-        'alerted': False,
-        'location': 'Easy Marianndel-5',
-        'base_time': timezone.localize(datetime.now().replace(hour=23, minute=15, second=0, microsecond=0))  # 11:15 PM
-    },
-    'Betalanse': {
-        'cycle': 2, 
-        'last_death': None, 
-        'alerted': False,
-        'location': 'Easy Carrotova-5',
-        'base_time': timezone.localize(datetime.now().replace(hour=22, minute=0, second=0, microsecond=0))  # 10 PM
-    },
-    'Cryo': {
-        'cycle': 4,
-        'last_death': None,
-        'alerted': False,
-        'location': 'Easy Acryos-5',
-        'base_time': timezone.localize(datetime.now().replace(hour=24, minute=5, second=0, microsecond=0))  # 12:05pm PM
-    },
-    'Sporelex': {
-        'cycle': 4,
-        'last_death': None,
-        'alerted': False,
-        'location': 'Easy Luminospore-5',
-        'base_time': timezone.localize(datetime.now().replace(hour=23, minute=10, second=0, microsecond=0))  # 11:10pm PM
-    },
-    'Toxspore': {
-        'cycle': 4,
-        'last_death': None,
-        'alerted': False,
-        'location': 'Normal Cryptospora-5',
-        'base_time': timezone.localize(datetime.now().replace(hour=23, minute=20, second=0, microsecond=0))  # 10 PM
-    },
-    'Bristol': {
-        'cycle': 6,
-        'last_death': None,
-        'alerted': False,
-        'location': 'Normal Silavar-5',
-        'base_time': timezone.localize(datetime.now().replace(hour=1, minute=25, second=0, microsecond=0))  # 1:25 AM
-    },
-    'Veilian': {
-        'cycle': 8,
-        'last_death': None,
-        'alerted': False,
-        'location': 'Normal Mortaris-5',
-        'base_time': timezone.localize(datetime.now().replace(hour=24, minute=25, second=0, microsecond=0))  # 12:25 AM
-    },
-    'Arque': {
-        'cycle': 8,
-        'last_death': None,
-        'alerted': False,
-        'location': 'Normal Astreon-5',
-        'base_time': timezone.localize(datetime.now().replace(hour=1, minute=35, second=0, microsecond=0))  # 01:35 AM
-    }   
-}
+def get_boss_image(boss_info):
+    """Get boss image if it exists"""
+    if 'image' in boss_info and os.path.exists(boss_info['image']):
+        return discord.File(boss_info['image'])
+    return None
+
+# Load bosses from JSON file
+def load_bosses():
+    with open('bosses.json', 'r') as f:
+        boss_data = json.load(f)
+        
+    # Convert the base_time from JSON format to timezone-aware datetime
+    for boss in boss_data.values():
+        base = boss['base_time']
+        boss['base_time'] = timezone.localize(
+            datetime.now().replace(
+                hour=base['hour'],
+                minute=base['minute'],
+                second=base['second'],
+                microsecond=0
+            )
+        )
+    return boss_data
+
+# Load bosses at startup
+bosses = load_bosses()
 
 async def check_spawns():
     await bot.wait_until_ready()
@@ -94,7 +62,14 @@ async def check_spawns():
             
             # If 10 minutes before spawn and haven't alerted yet
             if timedelta(minutes=9) < time_until_spawn <= timedelta(minutes=10) and not info['alerted']:
-                await channel.send(f'⚠️ **Alert**: {boss_name} will spawn in 10 minutes in {info["location"]}! (at {next_spawn.strftime("%H:%M:%S")})')
+                image = get_boss_image(info)
+                if image:
+                    await channel.send(
+                        f'⚠️ **Alert**: {boss_name} will spawn in 10 minutes in {info["location"]}! (at {next_spawn.strftime("%H:%M:%S")})',
+                        file=image
+                    )
+                else:
+                    await channel.send(f'⚠️ **Alert**: {boss_name} will spawn in 10 minutes in {info["location"]}! (at {next_spawn.strftime("%H:%M:%S")})')
                 info['alerted'] = True
             
             # Reset alert flag after spawn time
@@ -119,7 +94,15 @@ async def dead(ctx, *, boss_name: str):
         bosses[boss_name]['last_death'] = timezone.localize(datetime.now())
         bosses[boss_name]['alerted'] = False
         next_spawn = datetime.now() + timedelta(hours=bosses[boss_name]['cycle'])
-        await ctx.send(f'{boss_name} died. Next spawn at {next_spawn.strftime("%H:%M:%S")}')
+        
+        image = get_boss_image(bosses[boss_name])
+        if image:
+            await ctx.send(
+                f'{boss_name} died. Next spawn at {next_spawn.strftime("%H:%M:%S")}',
+                file=image
+            )
+        else:
+            await ctx.send(f'{boss_name} died. Next spawn at {next_spawn.strftime("%H:%M:%S")}')
     else:
         await ctx.send(f'Unknown boss: {boss_name}')
 
@@ -127,8 +110,9 @@ async def dead(ctx, *, boss_name: str):
 async def next(ctx, *, boss_name: str):
     """Check next spawn time. Usage: !next bossName"""
     if boss_name in bosses:
+        info = bosses[boss_name]  # This 'info' is the boss_info dictionary
+        # Now info contains all the boss data from JSON
         current_time = timezone.localize(datetime.now())
-        info = bosses[boss_name]
         
         if info['last_death']:
             next_spawn = info['last_death'] + timedelta(hours=info['cycle'])
@@ -139,7 +123,14 @@ async def next(ctx, *, boss_name: str):
             next_spawn = base
         
         time_until = next_spawn - current_time
-        await ctx.send(f'{boss_name} ({info["location"]}) next spawn: {next_spawn.strftime("%H:%M:%S")} (in {str(time_until).split(".")[0]})')
+        image = get_boss_image(info)
+        if image:
+            await ctx.send(
+                f'{boss_name} ({info["location"]}) next spawn: {next_spawn.strftime("%H:%M:%S")} (in {str(time_until).split(".")[0]})',
+                file=image
+            )
+        else:
+            await ctx.send(f'{boss_name} ({info["location"]}) next spawn: {next_spawn.strftime("%H:%M:%S")} (in {str(time_until).split(".")[0]})')
     else:
         await ctx.send(f'Unknown boss: {boss_name}')
 
